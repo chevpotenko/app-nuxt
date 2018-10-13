@@ -1,3 +1,9 @@
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/appnuxt/'
+  }
+} : {}
+
 module.exports = {
   /*
   ** Headers of the page
@@ -20,12 +26,16 @@ module.exports = {
   /*
   ** Build configuration
   */
+
+
+ ...routerBase,
+  
   build: {
     /*
     ** Run ESLint on save
     */
     extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
+      if (isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
